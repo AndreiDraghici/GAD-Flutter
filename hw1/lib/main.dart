@@ -48,7 +48,7 @@ class _ConvertState extends State<Convert> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Image(
-                image: ResizeImage(AssetImage('ron.jpg'),
+                image: ResizeImage(AssetImage('assets/ron.jpg'),
                     width: 400, height: 250)),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -59,6 +59,8 @@ class _ConvertState extends State<Convert> {
                       SizedBox(
                         width: 150,
                         child: TextField(
+                          keyboardType: TextInputType.number,
+
                           controller: input_val,
                           decoration: InputDecoration(
                             labelText: _input_name,
@@ -96,29 +98,47 @@ class _ConvertState extends State<Convert> {
                   onTap: () {
                     try {
                       _input_ammount = double.parse(input_val.text);
+                      if (_is_ron == true) {
+                        _output_ammout = _input_ammount / _eurron;
+                        _output = ("${_output_ammout.toStringAsFixed(2)}EURO");
+                      } else {
+                        _output_ammout = _input_ammount * _eurron;
+                        _output = ("${_output_ammout.toStringAsFixed(2)}RON");
+                      }
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text("Please enter a valid number")));
+                      _output = "0";
                     }
-                    if (_is_ron == true) {
-                      _output_ammout = _input_ammount / _eurron;
-                      _output = ("${_output_ammout.toStringAsFixed(2)}EURO");
-                    } else {
-                      _output_ammout = _input_ammount * _eurron;
-                      _output = ("${_output_ammout.toStringAsFixed(2)}RON");
-                    }
+
 
                     setState(() {});
                   },
-                  child: const Text(
-                    "CONVERT",
-                    style: TextStyle(
-                        fontSize: 30,
-                        //height: 4,
-                        color: Colors.blue,
-                        backgroundColor: Colors.yellow),
+                  child: const SizedBox(
+                    height: 55,
+                    width: 200,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+    ),
+
+                      child: Center(
+                        child: Text(
+                          "CONVERT",
+                          style: TextStyle(
+                              fontSize: 30,
+                              //  height: 4,
+
+                              color: Colors.black,
+                             // backgroundColor: Colors.grey),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  ),
+                  ),
+
+
               ],
             ),
             const SizedBox(height: 0),
